@@ -158,7 +158,7 @@ export class SetFilter extends BaseFilter <string, ISetFilterParams, string[] | 
     }
 
     public doesFilterPass(params: IDoesFilterPassParams): boolean {
-
+        console.log(params);
         // if no filter, always pass
         if (this.model.isEverythingSelected() && !this.filterParams.selectAllOnMiniFilter) {
             return true;
@@ -255,7 +255,7 @@ export class SetFilter extends BaseFilter <string, ISetFilterParams, string[] | 
                             <div id="selectAll" class="ag-filter-checkbox"></div><span class="ag-filter-value">(${translate('selectAll')})</span>
                         </label>
                     </div>
-                    <div id="richList" class="ag-set-filter-list"></div>                    
+                    <div id="richList" class="ag-set-filter-list"></div>
                 </div>`;
     }
 
