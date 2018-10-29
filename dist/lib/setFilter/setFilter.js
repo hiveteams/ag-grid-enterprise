@@ -121,6 +121,7 @@ var SetFilter = /** @class */ (function (_super) {
         return this.model.isFilterActive();
     };
     SetFilter.prototype.doesFilterPass = function (params) {
+        console.log(params.node);
         // if no filter, always pass
         if (this.model.isEverythingSelected() && !this.filterParams.selectAllOnMiniFilter) {
             return true;
