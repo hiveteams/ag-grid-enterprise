@@ -122,7 +122,7 @@ var SetFilter = (function (_super) {
     };
     SetFilter.prototype.doesFilterPass = function (params) {
         // when action pinned, always pass
-        if (params.data &params.data.isPinned) {
+        if (params.data && params.data.isPinned) {
             return true;
         }
         // if no filter, always pass
