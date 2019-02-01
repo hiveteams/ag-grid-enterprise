@@ -5410,11 +5410,11 @@ var GridApi = /** @class */ (function () {
         this.detailGridInfoMap = {};
         /*
         Taking these out, as we want to reconsider how we register components
-    
+
         public addCellRenderer(key: string, cellRenderer: {new(): ICellRenderer} | ICellRendererFunc): void {
             this.cellRendererFactory.addCellRenderer(key, cellRenderer);
         }
-    
+
         public addCellEditor(key: string, cellEditor: {new(): ICellEditor}): void {
             this.cellEditorFactory.addCellEditor(key, cellEditor);
         }*/
@@ -8280,10 +8280,10 @@ var ColumnController = /** @class */ (function () {
     // with either one column (if it was just one col) or a list of columns
     // used by: autoResize, setVisible, setPinned
     ColumnController.prototype.actionOnGridColumns = function (// the column keys this action will be on
-    keys, 
+    keys,
     // the action to do - if this returns false, the column was skipped
     // and won't be included in the event
-    action, 
+    action,
     // should return back a column event of the right type
     source, createEvent) {
         var _this = this;
@@ -8912,9 +8912,9 @@ var ColumnController = /** @class */ (function () {
         return this.ready;
     };
     ColumnController.prototype.createValueColumns = function (source, oldPrimaryColumns) {
-        this.valueColumns = this.extractColumns(oldPrimaryColumns, this.valueColumns, function (col, flag) { return col.setValueActive(flag, source); }, 
+        this.valueColumns = this.extractColumns(oldPrimaryColumns, this.valueColumns, function (col, flag) { return col.setValueActive(flag, source); },
         // aggFunc doesn't have index variant, cos order of value cols doesn't matter, so always return null
-        function () { return null; }, 
+        function () { return null; },
         // aggFunc is a string, so return it's existence
         function (colDef) { return !!colDef.aggFunc; });
         // all new columns added will have aggFunc missing, so set it to what is in the colDef
@@ -10650,9 +10650,9 @@ var ColumnUtils = /** @class */ (function () {
     /*    public getPathForColumn(column: Column, allDisplayedColumnGroups: ColumnGroupChild[]): ColumnGroup[] {
             let result: ColumnGroup[] = [];
             let found = false;
-    
+
             recursePath(allDisplayedColumnGroups, 0);
-    
+
             // we should always find the path, but in case there is a bug somewhere, returning null
             // will make it fail rather than provide a 'hard to track down' bug
             if (found) {
@@ -10660,9 +10660,9 @@ var ColumnUtils = /** @class */ (function () {
             } else {
                 return null;
             }
-    
+
             function recursePath(balancedColumnTree: ColumnGroupChild[], dept: number): void {
-    
+
                 for (let i = 0; i<balancedColumnTree.length; i++) {
                     if (found) {
                         // quit the search, so 'result' is kept with the found result
@@ -11217,13 +11217,13 @@ var DisplayedGroupCreator = /** @class */ (function () {
     }
     DisplayedGroupCreator.prototype.createDisplayedGroups = function (
     // all displayed columns sorted - this is the columns the grid should show
-    sortedVisibleColumns, 
+    sortedVisibleColumns,
     // the tree of columns, as provided by the users, used to know what groups columns roll up into
-    balancedColumnTree, 
+    balancedColumnTree,
     // create's unique id's for the group
-    groupInstanceIdCreator, 
+    groupInstanceIdCreator,
     // whether it's left, right or center col
-    pinned, 
+    pinned,
     // we try to reuse old groups if we can, to allow gui to do animation
     oldDisplayedGroups) {
         var _this = this;
@@ -15265,7 +15265,7 @@ var CellComp = /** @class */ (function (_super) {
     CellComp.prototype.addPopupCellEditor = function () {
         var _this = this;
         var ePopupGui = this.cellEditor ? this.cellEditor.getGui() : null;
-        this.hideEditorPopup = this.beans.popupService.addAsModalPopup(ePopupGui, true, 
+        this.hideEditorPopup = this.beans.popupService.addAsModalPopup(ePopupGui, true,
         // callback for when popup disappears
         function () {
             _this.onPopupEditorClosed();
@@ -26380,7 +26380,7 @@ var LargeTextCellEditor = /** @class */ (function (_super) {
     LargeTextCellEditor.prototype.isPopup = function () {
         return true;
     };
-    LargeTextCellEditor.TEMPLATE = 
+    LargeTextCellEditor.TEMPLATE =
     // tab index is needed so we can focus, which is needed for keyboard events
     '<div class="ag-large-text" tabindex="0">' +
         '<div class="ag-large-textarea"></div>' +
@@ -38591,7 +38591,7 @@ var EnterpriseMenu = /** @class */ (function (_super) {
         var pivotModeOn = this.columnController.isPivotMode();
         var isInMemoryRowModel = this.rowModel.getType() === ag_grid_community_1.Constants.ROW_MODEL_TYPE_CLIENT_SIDE;
         var usingTreeData = this.gridOptionsWrapper.isTreeData();
-        var allowValueAgg = 
+        var allowValueAgg =
         // if primary, then only allow aggValue if grouping and it's a value columns
         (isPrimary && doingGrouping && allowValue)
             // secondary columns can always have aggValue, as it means it's a pivot value column
@@ -44446,6 +44446,11 @@ var SetFilter = /** @class */ (function (_super) {
         return this.model.isFilterActive();
     };
     SetFilter.prototype.doesFilterPass = function (params) {
+        // when action pinned, always pass
+        if (params.data && params.data.isPinned) {
+            return true;
+        }
+
         // if no filter, always pass
         if (this.model.isEverythingSelected() && !this.filterParams.selectAllOnMiniFilter) {
             return true;
